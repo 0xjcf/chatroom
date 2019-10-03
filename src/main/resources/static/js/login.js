@@ -1,8 +1,9 @@
-const userName = document.getElementById("userNameInput").value;
+const userNameInput = document.getElementById("userNameInput");
 const loginButton = document.getElementById("loginButton");
 
 function login() {
     event.preventDefault();
+    const userName = userNameInput.value;
     window.location.assign(`/chat?username=${userName}`)
 }
 
