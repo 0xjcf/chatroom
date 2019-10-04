@@ -18,24 +18,27 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 
 @Component
-@ServerEndpoint("/chatroom")
+@ServerEndpoint("/chatroom/{username}")
 public class WebSocketChatServer {
     /**
      * All chat sessions.
      */
     private static Map<String, Session> onlineSessions = new ConcurrentHashMap<>();
 
-    private static void sendMessageToAll(String msg) {
-        //TODO: add send message method.
+    private static void sendMessageToAll(Session session, String msg) throws IOException {
+        session.getBasicRemote().sendText(msg);
     }
 
     /**
      * Open connection, 1) add session, 2) add user.
      */
     @OnOpen
-    public void onOpen(Session session) {
-        System.out.println("onOpen: " + session.getId());
-
+    public void onOpen(Session session, @PathParam("username") String username) throws IOException {
+        System.out.println("Socket Open: " + session.getId());
+        onlineSessions.put(session.getId(), session);
+        Message message = new Message("ENTER", username, username + " has entered the room.", onlineSessions.size());
+        String msg = message.jsonConverter(message.getType(), message.getUsername(), message.getMessage(), message.getOnlineCount());
+        sendMessageToAll(session, msg);
     }
 
     /**
@@ -43,9 +46,10 @@ public class WebSocketChatServer {
      */
     @OnMessage
     public void onMessage(Session session, String jsonStr) {
-        //TODO: add send message.
+        System.out.println("Message has been sent");
+        System.out.println(session);
+        System.out.println(jsonStr);
     }
-
     /**
      * Close connection, 1) remove session, 2) update user.
      */

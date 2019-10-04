@@ -3,8 +3,8 @@ const loginButton = document.getElementById("login-button");
 
 function login() {
     event.preventDefault();
-    const userName = userNameInput.value;
-    window.location.assign(`/chat?username=${userName}`)
+    const username = userNameInput.value;
+    window.location.assign(`/chat?username=${username}`)
 }
 
 loginButton.addEventListener("click", login);

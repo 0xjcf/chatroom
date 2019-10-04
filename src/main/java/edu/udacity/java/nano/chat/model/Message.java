@@ -1,16 +1,36 @@
 package edu.udacity.java.nano.chat.model;
 
+import com.alibaba.fastjson.JSON;
+
 /**
  * WebSocket message model
  */
 public class Message {
-    private String username;
-    private String message;
     private String type;
-    private String onlineCount;
+    private String username;
+    private String text;
+    private int onlineCount;
 
     public Message() {
+    }
 
+    public Message(String type, String username, String text, int onlineCount) {
+        this.type = type;
+        this.username = username;
+        this.text = text;
+        this.onlineCount = onlineCount;
+    }
+
+    public static String jsonConverter(String type, String username, String text, int onlineCount) {
+        return JSON.toJSONString(new Message(type, username, text, onlineCount));
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getUsername() {
@@ -22,26 +42,19 @@ public class Message {
     }
 
     public String getMessage() {
-        return message;
+        return text;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setMessage(String text) {
+        this.text = text;
     }
 
-    public String getType() {
-        return type;
-    }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getOnlineCount() {
+    public int getOnlineCount() {
         return onlineCount;
     }
 
-    public void setOnlineCount(String onlineCount) {
+    public void setOnlineCount(int onlineCount) {
         this.onlineCount = onlineCount;
     }
 }

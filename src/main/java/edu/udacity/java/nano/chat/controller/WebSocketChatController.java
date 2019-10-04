@@ -1,5 +1,6 @@
 package edu.udacity.java.nano.chat.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,7 +23,7 @@ public class WebSocketChatController {
      */
     @GetMapping("/chat")
     public ModelAndView index(String username, HttpServletRequest request) throws UnknownHostException {
-        ModelAndView modelAndView = new ModelAndView("/chat");
+        ModelAndView modelAndView = new ModelAndView("/chat", HttpStatus.OK);
         modelAndView.addObject("username", username);
         return modelAndView;
     }
