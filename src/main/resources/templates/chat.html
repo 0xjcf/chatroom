@@ -37,11 +37,17 @@
                 <label class="mdui-textfield-label">Send Text</label>
                 <input class="mdui-textfield-input" id="msg" />
               </div>
-              <div class="mdui-container" style="padding:20px 35px">
+              <div class="mdui-container">
                 <!-- TODO: add a send button to send message -->
                 <button
+                  id="send-message"
                   class="mdui-btn mdui-color-theme mdui-ripple"
-                  onclick="clearMsg()"
+                >
+                  Send
+                </button>
+                <button
+                  id="clear-message"
+                  class="mdui-btn mdui-color-theme mdui-ripple"
                 >
                   Clear
                 </button>
@@ -61,7 +67,9 @@
               <span class="mdui-chip-icon mdui-color-blue">
                 <i class="mdui-icon material-icons">face</i></span
               >
-              <span class="mdui-chip-title">Online Users: <span id="chat-num"></span></span>              
+              <span class="mdui-chip-title"
+                >Online Users: <span id="chat-num"></span
+              ></span>
             </div>
 
             <div class="mdui-chip">

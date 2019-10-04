@@ -1,12 +1,9 @@
 const SPEAK = "SPEAK";
 const ENTER = "ENTER";
 const username = document.querySelector("#username").textContent;
-let message = document.querySelector("#msg").textContent;
-console.log(username);
-console.log(message);
+const message = document.querySelector("#msg");
 
 const socket = new WebSocket(`ws://localhost:8080/chatroom/${username}`);
-
 console.log("Connecting to socket...");
 
 socket.onopen = function(event) {
@@ -60,18 +57,25 @@ socket.onerror = function(event) {
   console.log("WebSocket exception.");
 };
 
-function sendMsgToServer(type = "", username = "", message = "") {
-  if (message) {
-    socket.send(JSON.stringify({ type, username, message: message }));
-    message.value = null;
+function sendMessageToServer() {
+  console.log(`Sending message to server...`);
+  if (message.value) {
+    socket.send(JSON.stringify({ username, message: message.value }));
+    clearMessage();
   }
 }
 
-function clearMsg() {
-  document.querySelector(".message-container").remove();
+function clearMessage() {
+  message.value = "";
 }
+
+const sendMessageButton = document.querySelector("#send-message");
+sendMessageButton.addEventListener("click", sendMessageToServer);
+
+const clearMessageButton = document.querySelector("#clear-message");
+clearMessageButton.addEventListener("click", clearMessage);
 
 document.onkeydown = function(event) {
   var e = event || window.event || arguments.callee.caller.arguments[0];
-  e.keyCode === 13 && sendMsgToServer();
+  e.keyCode === 13 && sendMessageToServer();
 };
