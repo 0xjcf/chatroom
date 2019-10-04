@@ -1,5 +1,5 @@
 edu/udacity/java/nano/chat/controller/WebSocketChatController.class
-edu/udacity/java/nano/chat/WebSocketChatApplication.class
 edu/udacity/java/nano/chat/model/Message.class
 edu/udacity/java/nano/chat/WebSocketChatServer.class
 edu/udacity/java/nano/chat/config/WebSocketConfig.class
+edu/udacity/java/nano/chat/WebSocketChatApplication.class

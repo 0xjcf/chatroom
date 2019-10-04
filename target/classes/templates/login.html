@@ -1,29 +1,29 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>Chat Room Login</title>
-        <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-        <link rel="stylesheet" href="../style/login.css" />
-    </head>
-    <body>
-        <div class="logo_box">
-            <h3>Chat Room</h3>
-            <form>
-                <div class="input_outer">
-                    <span class="u_user"></span>
-                    <input
-                        id="userNameInput"
-                        name="username"
-                        class="text"
-                        type="text"
-                        placeholder="Username"
-                    />
-                </div>
-                <div class="mb2">
-                    <a id="loginButton" class="act-but submit">Login</a>
-                </div>
-            </form>
+  <head>
+    <title>Chat Room Login</title>
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <link rel="stylesheet" href="../style/login.css" />
+  </head>
+  <body>
+    <div class="logo_box">
+      <h3>Chat Room</h3>
+      <form>
+        <div class="input_outer">
+          <span class="u_user"></span>
+          <input
+            id="user-name-input"
+            name="username"
+            class="text"
+            type="text"
+            placeholder="Username"
+          />
         </div>
-        <script src="../js/login.js"></script>
-    </body>
+        <div class="mb2">
+          <a id="login-button" class="act-but submit">Login</a>
+        </div>
+      </form>
+    </div>
+    <script src="../js/login.js"></script>
+  </body>
 </html>

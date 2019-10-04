@@ -35,6 +35,7 @@ public class WebSocketChatServer {
     @OnOpen
     public void onOpen(Session session) {
         System.out.println("onOpen: " + session.getId());
+
     }
 
     /**

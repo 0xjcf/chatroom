@@ -1,5 +1,5 @@
-const userNameInput = document.getElementById("userNameInput");
-const loginButton = document.getElementById("loginButton");
+const userNameInput = document.getElementById("user-name-input");
+const loginButton = document.getElementById("login-button");
 
 function login() {
     event.preventDefault();
