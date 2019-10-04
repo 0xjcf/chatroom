@@ -1,5 +1,5 @@
 # Chat Room
-Complete the chat room application implementation using WebSocket.
+Chat room application using WebSocket.
 
 ## Background
 WebSocket is a communication protocol that makes it possible to establish a two-way communication channel between a
