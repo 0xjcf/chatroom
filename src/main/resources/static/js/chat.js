@@ -56,9 +56,6 @@ const exitAppButton = document.querySelector("#exit-app");
 exitAppButton.addEventListener("click", socket.onclose = function(event) {
   console.log("WebSocket close connection.");
 })
-// socket.onclose = function(event) {
-//   console.log("WebSocket close connection.");
-// };
 
 socket.onerror = function(event) {
   console.log("WebSocket exception.");
