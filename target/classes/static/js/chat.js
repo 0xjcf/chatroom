@@ -17,14 +17,16 @@ socket.onmessage = function(event) {
   const messageContainer = document.querySelector("#message-container");
 
   if (message.type === SPEAK) {
-    messageContainer.insertAdjacentHTML = `
-    <div class="mdui-card" style="margin: 10px 0;">
+    messageContainer.insertAdjacentHTML(
+      "beforeend",
+      `<div class="mdui-card" style="margin: 10px 0;">
         <div class="mdui-card-primary">
             <div class="mdui-card-content message-content">
                 ${message.username}: ${messageText}
             </div>
         </div>
-    </div>`;
+      </div>`
+    );
   }
 
   const enterOrExit = document.querySelector("#enter-or-exit");
@@ -55,10 +57,7 @@ socket.onmessage = function(event) {
 const exitAppButton = document.querySelector("#exit-app");
 exitAppButton.addEventListener("click", socket.onclose = function(event) {
   console.log("WebSocket close connection.");
-})
-// socket.onclose = function(event) {
-//   console.log("WebSocket close connection.");
-// };
+});
 
 socket.onerror = function(event) {
   console.log("WebSocket exception.");

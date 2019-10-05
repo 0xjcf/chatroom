@@ -1,5 +1,6 @@
 package edu.udacity.java.nano.chat;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.udacity.java.nano.chat.model.Message;
 import org.springframework.stereotype.Component;
 
@@ -47,9 +48,19 @@ public class WebSocketChatServer {
 
     @OnMessage
     public void onMessage(Session session, String jsonStr) {
-        System.out.println("Message has been sent");
-        System.out.println(session);
-        System.out.println(jsonStr);
+        System.out.println("A message has been received");
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            Map<String, String> map = mapper.readValue(jsonStr, Map.class);
+            Message message = new Message();
+            message.setType("SPEAK");
+            message.setUsername(map.get("username"));
+            message.setMessage(map.get("message"));
+            String msg = message.jsonConverter(message.getType(), message.getUsername(), message.getMessage(), onlineSessions.size());
+            sendMessageToAll(msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @OnClose
