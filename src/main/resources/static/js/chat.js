@@ -1,9 +1,8 @@
-const SPEAK = "SPEAK";
-const ENTER = "ENTER";
+const SPEAK = "SPEAK", ENTER = "ENTER", EXIT = "EXIT";
 const username = document.querySelector("#username").textContent;
 const message = document.querySelector("#msg");
-
 const socket = new WebSocket(`ws://localhost:8080/chatroom/${username}`);
+
 console.log("Connecting to socket...");
 
 socket.onopen = function(event) {
@@ -12,28 +11,31 @@ socket.onopen = function(event) {
 
 socket.onmessage = function(event) {
   console.log("WebSocket Receives：%c" + event.data, "color:green");
-  //Receive Message from Server
+
   const message = JSON.parse(event.data) || {};
   const messageText = message.message;
   const messageContainer = document.querySelector("#message-container");
+
   if (message.type === SPEAK) {
-    messageContainer.appendChild(
-      `<div class="mdui-card" style="margin: 10px 0;">
-            <div class="mdui-card-primary">
-                <div class="mdui-card-content message-content">
-                    ${message.username}: ${messageText}
-                </div>
+    messageContainer.insertAdjacentHTML = `
+    <div class="mdui-card" style="margin: 10px 0;">
+        <div class="mdui-card-primary">
+            <div class="mdui-card-content message-content">
+                ${message.username}: ${messageText}
             </div>
-        </div>`
-    );
+        </div>
+    </div>`;
   }
 
-  const enteredTheRoom = document.querySelector("#entered-the-room");
-  console.log(messageText);
+  const enterOrExit = document.querySelector("#enter-or-exit");
   if (message.type === ENTER) {
-    enteredTheRoom.textContent = messageText;
+    enterOrExit.innerHTML = `
+    <span class="mdui-chip-icon mdui-color-blue">
+      <i class="mdui-icon material-icons">transfer_within_a_station</i></span>
+    <span class="mdui-chip-title">${messageText}</span>`;
+
     setTimeout(function() {
-      enteredTheRoom.textContent = "";
+      enterOrExit.innerHTML = "";
     }, 2000);
   }
 
@@ -59,6 +61,7 @@ socket.onerror = function(event) {
 
 function sendMessageToServer() {
   console.log(`Sending message to server...`);
+  
   if (message.value) {
     socket.send(JSON.stringify({ username, message: message.value }));
     clearMessage();

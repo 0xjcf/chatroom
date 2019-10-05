@@ -14,14 +14,14 @@ public class Message {
     public Message() {
     }
 
-    public Message(String type, String username, String text, int onlineCount) {
+    private Message(String type, String username, String text, int onlineCount) {
         this.type = type;
         this.username = username;
         this.text = text;
         this.onlineCount = onlineCount;
     }
 
-    public static String jsonConverter(String type, String username, String text, int onlineCount) {
+    public String jsonConverter(String type, String username, String text, int onlineCount) {
         return JSON.toJSONString(new Message(type, username, text, onlineCount));
     }
 
