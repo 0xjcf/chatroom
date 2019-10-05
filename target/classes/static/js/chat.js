@@ -11,10 +11,11 @@ socket.onopen = function(event) {
 
 socket.onmessage = function(event) {
   console.log("WebSocket Receives：%c" + event.data, "color:green");
+
   const message = JSON.parse(event.data) || {};
-  console.log(message);
   const messageText = message.message;
   const messageContainer = document.querySelector("#message-container");
+
   if (message.type === SPEAK) {
     messageContainer.insertAdjacentHTML = `
     <div class="mdui-card" style="margin: 10px 0;">
@@ -27,7 +28,7 @@ socket.onmessage = function(event) {
   }
 
   const enterOrExit = document.querySelector("#enter-or-exit");
-  if (message.type === ENTER) {
+  if (message.type === ENTER || message.type === EXIT) {
     enterOrExit.innerHTML = `
     <span class="mdui-chip-icon mdui-color-blue">
       <i class="mdui-icon material-icons">transfer_within_a_station</i></span>
@@ -50,9 +51,14 @@ socket.onmessage = function(event) {
     console.log(card);
   }
 };
-socket.onclose = function(event) {
+
+const exitAppButton = document.querySelector("#exit-app");
+exitAppButton.addEventListener("click", socket.onclose = function(event) {
   console.log("WebSocket close connection.");
-};
+})
+// socket.onclose = function(event) {
+//   console.log("WebSocket close connection.");
+// };
 
 socket.onerror = function(event) {
   console.log("WebSocket exception.");
@@ -60,6 +66,7 @@ socket.onerror = function(event) {
 
 function sendMessageToServer() {
   console.log(`Sending message to server...`);
+
   if (message.value) {
     socket.send(JSON.stringify({ username, message: message.value }));
     clearMessage();

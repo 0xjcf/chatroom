@@ -33,7 +33,7 @@ public class WebSocketChatServer {
     }
 
     @OnOpen
-    public void onOpen(Session session, @PathParam("username") String username) throws IOException {
+    public void onOpen(Session session, @PathParam("username") String username) {
         System.out.println("Socket Open: " + session.getId());
         onlineSessions.put(session.getId(), session);
         Message message = new Message();
@@ -53,8 +53,16 @@ public class WebSocketChatServer {
     }
 
     @OnClose
-    public void onClose(Session session) {
-
+    public void onClose(Session session, @PathParam("username") String username) {
+        System.out.println("A session has been closed");
+        onlineSessions.remove(session.getId());
+        Message message = new Message();
+        message.setType("EXIT");
+        message.setUsername(username);
+        message.setMessage(username + " " + " has left the room.");
+        message.setOnlineCount(onlineSessions.size());
+        String msg = message.jsonConverter(message.getType(), message.getUsername(), message.getMessage(), message.getOnlineCount());
+        sendMessageToAll(msg);
     }
 
     @OnError
