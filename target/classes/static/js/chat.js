@@ -19,7 +19,7 @@ socket.onmessage = function(event) {
   if (message.type === SPEAK) {
     messageContainer.insertAdjacentHTML(
       "beforeend",
-      `<div class="mdui-card" style="margin: 10px 0;">
+      `<div class="card mdui-card" style="margin: 10px;">
         <div class="mdui-card-primary">
             <div class="mdui-card-content message-content">
                 ${message.username}: ${messageText}
@@ -42,15 +42,29 @@ socket.onmessage = function(event) {
   }
 
   document.querySelector("#chat-num").textContent = message.onlineCount;
-  const cards = messageContainer.children;
-  //   if (cards.length > 5) {
-  // cards.forEach(function(item, index) {
-  //   index < cards.length - 5 && item.slideUp("fast");
-  // });
-  //   }
+  const cards = messageContainer.childNodes;
 
-  for (let card of cards) {
-    console.log(card);
+  console.log(cards.length);
+
+  if (cards.length > 5) {
+    const scrollUpMessages = new Promise(function(resolve, reject) {
+      for (let card of cards) {
+        card.classList.add("message");
+      }
+      resolve("start scroll");
+    });
+
+    const removeOldestMessage = new Promise(function(resolve, reject) {
+      setTimeout(function() {
+        for (let card of cards) {
+          card.classList.remove("message");
+        }
+        resolve(messageContainer.removeChild(cards[0]));
+      }, 1000);
+    })
+
+    scrollUpMessages.then(removeOldestMessage);
+
   }
 };
 

@@ -1,0 +1,17 @@
+#message-container {
+  height: 535px;
+  overflow-y: hidden;
+}
+
+.message {
+  animation: movedown .10s ease 0s 1 forwards;
+}
+
+@keyframes movedown {
+  from {
+    bottom: 0px;
+  }
+  to {
+    bottom: 110px;
+  }
+}
